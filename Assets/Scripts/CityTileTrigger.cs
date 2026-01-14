@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CityTileTrigger : MonoBehaviour
 {
@@ -9,7 +9,7 @@ public class CityTileTrigger : MonoBehaviour
         if (other.CompareTag("Player") && !triggered)
         {
             triggered = true;
-            CityTileSpawner.Instance.SpawnAndDelete();
+            CityTileSpawner.Instance.SlideTileForward(); // ✅ FIXED
         }
     }
 }
