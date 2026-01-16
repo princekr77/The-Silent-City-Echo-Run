@@ -13,6 +13,10 @@ public class CityTileSpawner : MonoBehaviour
     public int tilesOnScreen = 6;
     public float tileLength = 30f;
 
+    [Header("Delayed Removal")]
+    public int removeAfterTriggers = 5;
+
+    private int triggerCount = 0;
     private float spawnZ = 0f;
     private List<GameObject> activeTiles = new List<GameObject>();
 
@@ -23,16 +27,10 @@ public class CityTileSpawner : MonoBehaviour
 
     void Start()
     {
-        // Spawn start tile
-        GameObject first = Instantiate(
-            startTile,
-            Vector3.forward * spawnZ,
-            Quaternion.identity
-        );
+        GameObject first = Instantiate(startTile, Vector3.forward * spawnZ, Quaternion.identity);
         activeTiles.Add(first);
         spawnZ += tileLength;
 
-        // Spawn remaining tiles
         for (int i = 1; i < tilesOnScreen; i++)
         {
             SpawnRandomTile();
@@ -53,24 +51,27 @@ public class CityTileSpawner : MonoBehaviour
         spawnZ += tileLength;
     }
 
-    // 🔥 CALLED FROM TRIGGER
-    public void SlideTileForward()
+    // 🔥 TRIGGER-AWARE + DELAYED REMOVAL
+    public void OnPlayerHitTrigger(GameObject currentTile)
     {
-        // Take the first tile (behind player)
-        GameObject tileToMove = activeTiles[0];
-        activeTiles.RemoveAt(0);
+        triggerCount++;
 
-        // Move it to the end (Z axis only)
-        tileToMove.transform.position = new Vector3(
-            tileToMove.transform.position.x,
-            tileToMove.transform.position.y,
-            spawnZ
-        );
+        // Always add new tile
+        SpawnRandomTile();
 
-        // Update next spawn position
-        spawnZ += tileLength;
+        // Remove only after N triggers
+        if (triggerCount >= removeAfterTriggers)
+        {
+            int currentIndex = activeTiles.IndexOf(currentTile);
 
-        // Add it back at the end
-        activeTiles.Add(tileToMove);
+            if (currentIndex > 0)
+            {
+                GameObject previousTile = activeTiles[currentIndex - 1];
+                activeTiles.RemoveAt(currentIndex - 1);
+                Destroy(previousTile);
+            }
+
+            triggerCount = 0; // reset counter
+        }
     }
 }
