@@ -3,7 +3,32 @@ guid: 3fdccd7edd8b7974c8dd79d3c804e502
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Gate Arm Main
+    second: {fileID: 2100000, guid: 3f823674d1dd3e2489e0e86294c70376, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Gate Arm Secondary
+    second: {fileID: 2100000, guid: 5598a0ef31e50b142885d50d8235a3bb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Gate Base Main Color
+    second: {fileID: 2100000, guid: b5b1415337d1d884ca2f16a3e014b88f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Gate Base Secondary Color
+    second: {fileID: 2100000, guid: 62fe3883c7dc5024eb7d58b0e9070603, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Gate Base Top
+    second: {fileID: 2100000, guid: 6eb623b283de2754e89c9ce9eaa7500e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

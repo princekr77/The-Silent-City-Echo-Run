@@ -12,13 +12,13 @@ public class CityTileSpawner : MonoBehaviour
     [Header("Settings")]
     public int tilesOnScreen = 6;
     public float tileLength = 30f;
-
-    [Header("Delayed Removal")]
     public int removeAfterTriggers = 5;
 
     private int triggerCount = 0;
     private float spawnZ = 0f;
+
     private List<GameObject> activeTiles = new List<GameObject>();
+    private Queue<GameObject> tilePool = new Queue<GameObject>();
 
     private void Awake()
     {
@@ -27,51 +27,84 @@ public class CityTileSpawner : MonoBehaviour
 
     void Start()
     {
+        // Start tile
         GameObject first = Instantiate(startTile, Vector3.forward * spawnZ, Quaternion.identity);
         activeTiles.Add(first);
         spawnZ += tileLength;
 
+        // Initial tiles
         for (int i = 1; i < tilesOnScreen; i++)
         {
-            SpawnRandomTile();
+            GameObject tile = InstantiateRandomTile(spawnZ);
+            activeTiles.Add(tile);
+            spawnZ += tileLength;
         }
     }
 
-    void SpawnRandomTile()
+    GameObject InstantiateRandomTile(float zPos)
     {
-        int randomIndex = Random.Range(0, cityTilePrefabs.Length);
-
-        GameObject tile = Instantiate(
-            cityTilePrefabs[randomIndex],
-            Vector3.forward * spawnZ,
-            Quaternion.identity
-        );
-
-        activeTiles.Add(tile);
-        spawnZ += tileLength;
+        int index = Random.Range(0, cityTilePrefabs.Length);
+        return Instantiate(cityTilePrefabs[index], Vector3.forward * zPos, Quaternion.identity);
     }
 
-    // 🔥 TRIGGER-AWARE + DELAYED REMOVAL
+    // 🔥 CALLED FROM TRIGGER
     public void OnPlayerHitTrigger(GameObject currentTile)
     {
         triggerCount++;
 
-        // Always add new tile
-        SpawnRandomTile();
+        // Always spawn new tile visually
+        SpawnOrReuseTile();
 
-        // Remove only after N triggers
-        if (triggerCount >= removeAfterTriggers)
+        // Delay removal logic
+        if (triggerCount < removeAfterTriggers)
+            return;
+
+        // Recycle previous tile
+        int currentIndex = activeTiles.IndexOf(currentTile);
+        if (currentIndex > 0)
         {
-            int currentIndex = activeTiles.IndexOf(currentTile);
+            GameObject oldTile = activeTiles[currentIndex - 1];
+            activeTiles.RemoveAt(currentIndex - 1);
 
-            if (currentIndex > 0)
-            {
-                GameObject previousTile = activeTiles[currentIndex - 1];
-                activeTiles.RemoveAt(currentIndex - 1);
-                Destroy(previousTile);
-            }
-
-            triggerCount = 0; // reset counter
+            oldTile.SetActive(false);
+            tilePool.Enqueue(oldTile);
         }
+    }
+
+    void SpawnOrReuseTile()
+    {
+        GameObject tile;
+
+        if (tilePool.Count > 0)
+        {
+            tile = tilePool.Dequeue();
+            tile.SetActive(true);
+
+            // Change tile content
+            int index = Random.Range(0, cityTilePrefabs.Length);
+            ReplaceTileMesh(tile, cityTilePrefabs[index]);
+        }
+        else
+        {
+            tile = InstantiateRandomTile(spawnZ);
+        }
+
+        tile.transform.position = Vector3.forward * spawnZ;
+        spawnZ += tileLength;
+
+        activeTiles.Add(tile);
+    }
+
+    // 🔄 Replace tile visuals safely
+    void ReplaceTileMesh(GameObject targetTile, GameObject newPrefab)
+    {
+        for (int i = targetTile.transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(targetTile.transform.GetChild(i).gameObject);
+        }
+
+        GameObject newVisual = Instantiate(newPrefab, targetTile.transform);
+        newVisual.transform.localPosition = Vector3.zero;
+        newVisual.transform.localRotation = Quaternion.identity;
     }
 }

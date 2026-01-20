@@ -3,7 +3,17 @@ guid: 1eb198bec0e844c40a4296bd3b8df68c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Main Color
+    second: {fileID: 2100000, guid: cc74ea3ea2a3a6e4cb1bd3a0a6c5e201, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Stripes
+    second: {fileID: 2100000, guid: db47b31c7664b2d4689dfbd8be3c036c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

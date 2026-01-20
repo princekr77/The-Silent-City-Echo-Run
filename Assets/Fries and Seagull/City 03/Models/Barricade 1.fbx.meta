@@ -3,7 +3,32 @@ guid: acfb1e5538b4fa24aa01ddfbe80a5406
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black and White Stripes (Black)
+    second: {fileID: 2100000, guid: e7fa412997568384fbaeb233c5a1153e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black and White Stripes (White)
+    second: {fileID: 2100000, guid: 4eddc3d06b35f5d48ab7f99ea942ee2b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Supports
+    second: {fileID: 2100000, guid: d077ee5811d4cdf47b9bc19d721b2ef1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Warning Panel
+    second: {fileID: 2100000, guid: 0ba9e7ba96764e24eb0c62c56eab82ba, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Warning Sign
+    second: {fileID: 2100000, guid: 530ad0fa78be58c4a90a9b3cfa30f0cc, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

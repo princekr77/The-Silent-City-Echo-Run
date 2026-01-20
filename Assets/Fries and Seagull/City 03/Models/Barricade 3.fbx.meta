@@ -3,7 +3,22 @@ guid: d6acac2ae56d3a84f9470eda878b8e51
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Gap
+    second: {fileID: 2100000, guid: 4c0ae7f28303b25418cba0694cb2059b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Main Color
+    second: {fileID: 2100000, guid: 5b91167babd48ed418e0f1cd9f2ce191, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Top Handle
+    second: {fileID: 2100000, guid: 1857ac8652a8c074c972ff5e514ba7de, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
