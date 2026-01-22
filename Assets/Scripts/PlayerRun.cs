@@ -22,7 +22,16 @@ public class PlayerController : MonoBehaviour
     public float gravity = -20f;
     private float verticalVelocity;
 
-    // ================= INPUT =================
+    // ================= SLIDE =================
+    [Header("Slide")]
+    public float slideDuration = 0.8f;
+    public float slideHeight = 1f;
+
+    private float originalHeight;
+    private Vector3 originalCenter;
+    private bool isSliding = false;
+
+    // ================= SWIPE =================
     [Header("Swipe Settings")]
     public float swipeThreshold = 50f;
     private Vector2 startTouchPos;
@@ -47,6 +56,9 @@ public class PlayerController : MonoBehaviour
     {
         startX = transform.position.x;
 
+        originalHeight = controller.height;
+        originalCenter = controller.center;
+
         animator.SetBool("isRunning", false);
         StartCoroutine(StartRunningAfterDelay());
     }
@@ -70,7 +82,7 @@ public class PlayerController : MonoBehaviour
                 runSpeed += speedIncreaseRate * Time.deltaTime;
         }
 
-        // ================= LANE POSITION =================
+        // ================= LANE =================
         float targetX = startX + (currentLane - 1) * laneDistance;
         move.x = (targetX - transform.position.x) * laneChangeSpeed;
 
@@ -82,7 +94,6 @@ public class PlayerController : MonoBehaviour
             if (verticalVelocity < 0)
                 verticalVelocity = -2f;
 
-            // PC jump
             if (Input.GetKeyDown(KeyCode.Space))
                 Jump();
         }
@@ -98,11 +109,14 @@ public class PlayerController : MonoBehaviour
         // ================= APPLY MOVE =================
         controller.Move(move * Time.deltaTime);
 
-        // ================= PC LANE INPUT =================
+        // ================= PC INPUT =================
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             ChangeLane(-1);
         else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             ChangeLane(1);
+
+        if ((Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) && !isSliding)
+            StartCoroutine(Slide());
 
         // ================= MOBILE INPUT =================
         HandleSwipeInput();
@@ -123,11 +137,34 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
+        if (isSliding) return;
+
         verticalVelocity = jumpForce;
         animator.SetTrigger("Jump");
     }
 
-    // ================= SWIPE HANDLING =================
+    IEnumerator Slide()
+    {
+        isSliding = true;
+        animator.SetBool("isSliding", true);
+
+        controller.height = slideHeight;
+        controller.center = new Vector3(
+            originalCenter.x,
+            slideHeight / 2f,
+            originalCenter.z
+        );
+
+        yield return new WaitForSeconds(slideDuration);
+
+        controller.height = originalHeight;
+        controller.center = originalCenter;
+
+        animator.SetBool("isSliding", false);
+        isSliding = false;
+    }
+
+    // ================= SWIPE =================
     void HandleSwipeInput()
     {
         if (Input.touchCount == 0)
@@ -146,22 +183,18 @@ public class PlayerController : MonoBehaviour
 
             if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
             {
-                // LEFT / RIGHT
                 if (Mathf.Abs(delta.x) > swipeThreshold)
                 {
-                    if (delta.x > 0)
-                        ChangeLane(1);   // swipe right
-                    else
-                        ChangeLane(-1);  // swipe left
+                    if (delta.x > 0) ChangeLane(1);
+                    else ChangeLane(-1);
                 }
             }
             else
             {
-                // UP
                 if (delta.y > swipeThreshold && controller.isGrounded)
-                {
                     Jump();
-                }
+                else if (delta.y < -swipeThreshold && !isSliding)
+                    StartCoroutine(Slide());
             }
         }
     }
