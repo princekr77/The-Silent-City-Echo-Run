@@ -174,7 +174,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 9b39dd7986cdc3344aeda99735eca352,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -30.8
+      value: -29.85
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9b39dd7986cdc3344aeda99735eca352,
         type: 3}
@@ -253,6 +253,17 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 385c0cdd6779c3c44a2c8cd64e05ca20, type: 2}
     - target: {fileID: 5866666021909216657, guid: 9b39dd7986cdc3344aeda99735eca352,
         type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:LeftFoot'\n\tTransform
+        'mixamorig:LeftHandThumb2'\n\tTransform 'mixamorig:LeftHandIndex1'\n\tTransform
+        'mixamorig:LeftHandPinky2'\n\tTransform 'mixamorig:RightHandRing2'\n\tTransform
+        'mixamorig:Spine1'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform 'mixamorig:RightArm'\n\tTransform
+        'mixamorig:LeftLeg'\n\tand more ...\n\tFrom animation clip 'Running Slide'"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 9b39dd7986cdc3344aeda99735eca352,
+        type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
@@ -276,6 +287,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5499442574865800756}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9b39dd7986cdc3344aeda99735eca352,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5398232106603923167}
   m_SourcePrefab: {fileID: 100100000, guid: 9b39dd7986cdc3344aeda99735eca352, type: 3}
 --- !u!4 &2625450772181978480 stripped
 Transform:
@@ -306,10 +321,10 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 1, y: 2.6780283, z: 0.8738632}
-  m_Center: {x: 0, y: 0.8390142, z: -0.06306839}
+  m_Size: {x: 1, y: 2.1578453, z: 0.8738632}
+  m_Center: {x: 0, y: 0.9260496, z: -0.06306839}
 --- !u!114 &939473528619033883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,9 +341,11 @@ MonoBehaviour:
   speedIncreaseRate: 0.2
   maxSpeed: 20
   laneDistance: 2
-  laneChangeSpeed: 8
+  laneChangeSpeed: 10
   jumpForce: 10
   gravity: -20
+  slideDuration: 0.8
+  slideHeight: 0.6
   swipeThreshold: 50
   animator: {fileID: 8254910399759210250}
 --- !u!143 &5499442574865800756
@@ -357,6 +374,29 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!136 &5398232106603923167
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3397026101382272970}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.4703267
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.73516333, z: 0}
 --- !u!95 &8254910399759210250 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 9b39dd7986cdc3344aeda99735eca352,
