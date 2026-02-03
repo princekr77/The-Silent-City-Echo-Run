@@ -9,12 +9,13 @@ public class CameraFollowAndShake : MonoBehaviour
     public float smoothTime = 0.15f;
 
     [Header("Shake")]
-    public float shakeDuration = 0.2f;
-    public float shakeMagnitude = 0.15f;
+    public float shakeDuration = 2f;
+    public float shakeMagnitude = 0.35f;
 
     Vector3 velocity;
     Vector3 shakeOffset;
-    Coroutine shakeRoutine;
+
+    bool hasShaken = false; // ensures shake happens only once
 
     void LateUpdate()
     {
@@ -36,29 +37,30 @@ public class CameraFollowAndShake : MonoBehaviour
         transform.position = smoothPos + shakeOffset;
     }
 
-    public void ShakeOnce()
+    public void ShakeForTime()
     {
-        if (shakeRoutine != null)
-            StopCoroutine(shakeRoutine);
+        if (hasShaken) return; // 🔥 never shake again
 
-        shakeRoutine = StartCoroutine(Shake());
+        hasShaken = true;
+        StartCoroutine(ShakeCoroutine());
     }
 
-    IEnumerator Shake()
+    IEnumerator ShakeCoroutine()
     {
-        float elapsed = 0f;
+        float timer = 0f;
 
-        while (elapsed < shakeDuration)
+        while (timer < shakeDuration)
         {
             float x = Random.Range(-1f, 1f) * shakeMagnitude;
             float y = Random.Range(-1f, 1f) * shakeMagnitude;
 
             shakeOffset = new Vector3(x, y, 0f);
 
-            elapsed += Time.deltaTime;
+            timer += Time.deltaTime;
             yield return null;
         }
 
+        // STOP SHAKE
         shakeOffset = Vector3.zero;
     }
 }

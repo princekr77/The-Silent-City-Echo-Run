@@ -3,32 +3,44 @@
 public class PlayerHit : MonoBehaviour
 {
     Animator animator;
-    CameraFollowAndShake cam;
     CharacterController controller;
-    bool canHit = true;
+
+    public CameraFollowAndShake cam;
+
+    bool isDead = false; // prevents multiple hits
 
     void Start()
     {
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
-        cam = Camera.main.GetComponent<CameraFollowAndShake>();
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (!controller.isGrounded) return;
+        if (isDead) return;
 
-        if (hit.gameObject.CompareTag("obstacle") && canHit)
+        if (hit.gameObject.CompareTag("obstacle"))
         {
+            isDead = true;
+
+            // Play hit animation
             animator.SetTrigger("Hit");
-            cam.ShakeOnce();
-            canHit = false;
-            Invoke(nameof(ResetHit), 0.6f);
+
+            // Shake camera once
+            if (cam != null)
+                cam.ShakeForTime();
+
+            // Stop player instantly
+            controller.enabled = false;
+
+            // Call game over (optional delay)
+            Invoke(nameof(GameOver), 1.5f);
         }
     }
 
-    void ResetHit()
+    void GameOver()
     {
-        canHit = true;
+        Debug.Log("GAME OVER");
+        // Add Game Over UI here later
     }
 }
