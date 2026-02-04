@@ -33,7 +33,7 @@ unique and unpredictable obstacles inside a looping environment.
 - Swipe Up → Jump
 - Swipe Down → Slide
 
-## 🏗️ Level & Obstacle Design
+## Level & Obstacle Design
 
 - The city is built using reusable tile prefabs
 - Each tile contains predefined obstacle spawn positions
