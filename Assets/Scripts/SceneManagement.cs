@@ -5,6 +5,9 @@ using UnityEngine.UI;
 public class SceneManagement : MonoBehaviour
 {
     public GameObject pauseUI;
+    public GameObject exitMenu;
+    public GameObject mainMenu;
+    public GameObject gameOver;
     public void LoadLevel()
     {
         SceneManager.LoadScene("Level2");
@@ -26,7 +29,7 @@ public class SceneManagement : MonoBehaviour
     public void Menu()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("MainMenu");
     }
     
      public void Pause()
@@ -46,5 +49,25 @@ public class SceneManagement : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("SampleScene");
+    }
+
+    public void Exit()
+    {
+        //Time.timeScale = 1;
+        mainMenu.SetActive(false);
+        exitMenu.SetActive(true);
+    }
+
+    public void Back()
+    {
+        //Time.timeScale = 1;
+        exitMenu.SetActive(false);
+        mainMenu.SetActive(true);
+    }
+
+    public void showGameOver()
+    {
+        Time.timeScale = 0;
+        gameOver.SetActive(true);
     }
 }

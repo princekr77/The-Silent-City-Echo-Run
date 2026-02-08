@@ -42,5 +42,7 @@ public class PlayerHit : MonoBehaviour
     {
         Debug.Log("GAME OVER");
         // Add Game Over UI here later
+        FindObjectOfType<SceneManagement>().showGameOver();
+
     }
 }
