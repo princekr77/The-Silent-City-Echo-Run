@@ -8,6 +8,7 @@ public class SceneManagement : MonoBehaviour
     public GameObject exitMenu;
     public GameObject mainMenu;
     public GameObject gameOver;
+    public GameObject pauseButton;
     public void LoadLevel()
     {
         SceneManager.LoadScene("Level2");
@@ -48,7 +49,8 @@ public class SceneManagement : MonoBehaviour
     public void Restart()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("GameScene");
+        pauseButton.SetActive(true);
     }
 
     public void Exit()
@@ -69,5 +71,6 @@ public class SceneManagement : MonoBehaviour
     {
         Time.timeScale = 0;
         gameOver.SetActive(true);
+        pauseButton.SetActive(false);
     }
 }

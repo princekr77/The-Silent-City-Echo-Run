@@ -56,11 +56,12 @@ public class CameraFollowAndShake : MonoBehaviour
 
             shakeOffset = new Vector3(x, y, 0f);
 
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime; // ✅ FIX
+
             yield return null;
         }
 
-        // STOP SHAKE
         shakeOffset = Vector3.zero;
     }
+
 }
