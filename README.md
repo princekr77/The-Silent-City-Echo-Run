@@ -11,6 +11,14 @@ running endlessly through the same city while avoiding frozen obstacles.
 The city itself is not destroyed — instead, time has stopped mid-moment, creating
 unique and unpredictable obstacles inside a looping environment.
 
+## 📸 Preview
+
+<img width="444" height="700" alt="Screenshot 2026-02-18 004459" src="https://github.com/user-attachments/assets/3b339426-8d19-4487-907a-43617a096cb7" />
+<img width="449" height="700" alt="Screenshot 2026-02-18 004544" src="https://github.com/user-attachments/assets/c2730ecf-87ad-4e14-a91c-2e3cf8dd9c06" />
+
+## 🎥 Demo: 
+https://www.linkedin.com/posts/prince-gupta-b98189330_gamedevelopment-unity3d-opentowork-ugcPost-7426352474523049984-bMUv?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFNR12QByjrX5kY1rkkM4X4BY0mKTRgbgKs)
+
 ## 🧠 Core Gameplay Mechanics
 
 - Automatic forward running with gradually increasing speed
