@@ -1,4 +1,4 @@
-# The Silent City: Echo Run
+# The Silent City
 
 A 3D endless runner set in a city frozen in time after a mysterious meteor event.
 
